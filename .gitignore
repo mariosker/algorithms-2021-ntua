@@ -1,6 +1,4 @@
-
-# Created by https://www.toptal.com/developers/gitignore/api/linux,windows,c++,vscode
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,windows,c++,vscode
+bench.*
 .vscode
 .vscode/*
 
