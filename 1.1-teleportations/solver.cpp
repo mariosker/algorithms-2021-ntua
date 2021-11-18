@@ -43,15 +43,6 @@ class Portal {
     exit_universe = exit_universe_;
     portal_size = portal_size_;
   }
-
-  /**
-   * @brief print the portal structure
-   *
-   */
-  void print_portal() {
-    cout << "(" << entry_universe << ", " << exit_universe << ", "
-         << portal_size << "), ";
-  }
 };
 
 /**
@@ -79,7 +70,7 @@ class Multiverse {
    *
    * @param universe_count_ number of universes
    */
-  void set_universes(int universe_count_) {
+  inline void set_universes(int universe_count_) {
     universe_count = universe_count_;
     universes.resize(universe_count);
   }
@@ -89,7 +80,7 @@ class Multiverse {
    *
    * @param portal_count_ number of portals
    */
-  void set_portals(int portal_count_) {
+  inline void set_portals(int portal_count_) {
     portal_count = portal_count_;
     portals.resize(portal_count);
   }
@@ -102,9 +93,10 @@ class Multiverse {
    * @return true if portal a has bigger size than b
    * @return false if portal b has bigger size than a
    */
-  static bool compare_portal_size(const Portal &a, const Portal &b) {
+  static inline bool compare_portal_size(const Portal &a, const Portal &b) {
     return (a.portal_size < b.portal_size);
   }
+
   /**
    * @brief sort portals based on their size
    *
@@ -130,12 +122,9 @@ class Dsu {
    */
   Dsu(int array_size) {
     parent.resize(array_size);
-    size.resize(array_size);
+    size.resize(array_size, 1);
 
-    for (int i = 0; i < array_size; i++) {
-      parent[i] = i;
-      size[i] = 1;
-    }
+    for (int i = 0; i < array_size; i++) parent[i] = i;
   }
 
   /**
@@ -167,6 +156,7 @@ class Dsu {
   void union_sets(int a, int b) {
     a = find_set(a);
     b = find_set(b);
+
     if (a != b) {
       if (size[a] < size[b]) swap(a, b);
       parent[b] = a;
@@ -182,7 +172,7 @@ class Dsu {
    * @return true if two nodes are in the same set
    * @return false if two nodes are not in the same set
    */
-  bool are_connected(int a, int b) { return find_set(a) == find_set(b); }
+  inline bool are_connected(int a, int b) { return find_set(a) == find_set(b); }
 };
 
 /**
@@ -233,7 +223,6 @@ bool check_weight(Multiverse &multiverse, int weight_index) {
   for (int i = 0; i < multiverse.universe_count; i++) {
     if (!dsu.are_connected(i, multiverse.universes[i])) return false;
   }
-
   return true;
 }
 
