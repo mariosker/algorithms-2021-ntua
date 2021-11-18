@@ -1,3 +1,13 @@
+/**
+ * @file solver.cpp
+ * @author Marios Kerasiotis
+ * @brief Solution for the teleportation problem in O((N+M)logM)
+ * @version 1.2
+ * @date 2021-11-18
+ *
+ * @copyright Copyright (c) 2021
+ *
+ */
 #include <bits/stdc++.h>
 using namespace std;
 
