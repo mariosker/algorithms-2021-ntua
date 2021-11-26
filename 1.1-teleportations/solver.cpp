@@ -102,7 +102,8 @@ class Multiverse {
    *
    */
   void sort_portals() {
-    sort(portals.begin(), portals.end(), compare_portal_size);
+    if (!is_sorted(portals.begin(), portals.end(), compare_portal_size))
+      sort(portals.begin(), portals.end(), compare_portal_size);
   }
 };
 
@@ -129,6 +130,10 @@ class Dsu {
     for (int i = 0; i < array_size; i++) parent[i] = i;
   }
 
+  /**
+   * @brief It resets the disjoint set
+   *
+   */
   void reset() {
     for (int i = 0; i < dsu_size; i++) parent[i] = i;
     memset(&size[0], 1, size.size() * sizeof size[0]);
@@ -239,10 +244,10 @@ bool check_weight(Multiverse &multiverse, Dsu &dsu, int weight_index) {
  * @return int
  */
 int right_bound(Multiverse &multiverse) {
+  Dsu dsu(multiverse.universe_count);
   int left = 0;
   int right = multiverse.portal_count;
   bool change_dsu = false;
-  Dsu dsu(multiverse.universe_count);
 
   while (left < right) {
     if (change_dsu) {
