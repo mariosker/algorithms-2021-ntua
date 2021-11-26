@@ -25,7 +25,7 @@ valgrind_extreme: $(OUT)
 	valgrind --leak-check=full --show-leak-kinds=all --leak-resolution=high --track-origins=yes --vgdb=yes ./$(OUT) < $(FILE)
 
 bench: $(OUT)
-	hyperfine --export-json bench.json -m 20 --parameter-scan testcase 1 $(INPUTS) "./$(OUT) <  inputs/input{testcase}.txt"
+	hyperfine --export-markdown bench.md -m 20 --parameter-scan testcase 1 $(INPUTS) "./$(OUT) <  inputs/input{testcase}.txt"
 
 test: $(OUT)
 	python ~/Desktop/projects/algo_help/test_algo/functional_test.py

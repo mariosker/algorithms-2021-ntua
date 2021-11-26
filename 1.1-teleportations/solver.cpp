@@ -113,6 +113,7 @@ class Multiverse {
 class Dsu {
   vector<int> parent;
   vector<int> size;
+  int dsu_size = 0;
 
  public:
   /**
@@ -121,10 +122,16 @@ class Dsu {
    * @param array_size number of nodes for the dsu
    */
   Dsu(int array_size) {
+    dsu_size = array_size;
     parent.resize(array_size);
     size.resize(array_size, 1);
 
     for (int i = 0; i < array_size; i++) parent[i] = i;
+  }
+
+  void reset() {
+    for (int i = 0; i < dsu_size; i++) parent[i] = i;
+    memset(&size[0], 1, size.size() * sizeof size[0]);
   }
 
   /**
@@ -212,9 +219,7 @@ void get_input(Multiverse &multiverse) {
  * @return true if portals are connected
  * @return false if portals are not connected
  */
-bool check_weight(Multiverse &multiverse, int weight_index) {
-  Dsu dsu(multiverse.universe_count);
-
+bool check_weight(Multiverse &multiverse, Dsu &dsu, int weight_index) {
   for (int i = weight_index; i < multiverse.portal_count; i++) {
     dsu.union_sets(multiverse.portals[i].entry_universe,
                    multiverse.portals[i].exit_universe);
@@ -236,13 +241,22 @@ bool check_weight(Multiverse &multiverse, int weight_index) {
 int right_bound(Multiverse &multiverse) {
   int left = 0;
   int right = multiverse.portal_count;
+  bool change_dsu = false;
+  Dsu dsu(multiverse.universe_count);
 
   while (left < right) {
+    if (change_dsu) {
+      dsu.reset();
+      change_dsu = false;
+    }
+
     int mid = left + (right - left) / 2;
-    if (!check_weight(multiverse, mid)) {
+
+    if (!check_weight(multiverse, dsu, mid)) {
       right = mid;
     } else {
       left = mid + 1;
+      change_dsu = true;
     }
   }
   return right - 1;
