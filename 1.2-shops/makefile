@@ -4,7 +4,7 @@ SOURCE	= solver.cpp
 HEADER	=
 OUT	= solver
 CC	= g++
-FLAGS	= -O2 -c -Wall
+FLAGS	= -g -O2 -c -Wall
 LFLAGS	=
 
 
@@ -32,4 +32,3 @@ test: $(OUT)
 
 clean:
 	rm -f $(OBJS) $(OUT) bench.*
-
