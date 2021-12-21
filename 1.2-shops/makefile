@@ -1,4 +1,4 @@
-INPUTS  = 25
+INPUTS  = 28
 OBJS	= solver.o
 SOURCE	= solver.cpp
 HEADER	=
